@@ -1,4 +1,4 @@
-#include <stdlib.h>^
+#include <stdlib.h>
 #include <SDL/SDL.h>
 #include <emscripten.h>
 #include <emscripten/bind.h>
