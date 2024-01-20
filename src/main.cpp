@@ -1,3 +1,4 @@
+#include <stdlib.h>^
 #include <SDL/SDL.h>
 #include <emscripten.h>
 #include <emscripten/bind.h>
@@ -17,6 +18,15 @@ extern "C" int main(int argc, char **argv) {
   screen = SDL_SetVideoMode(WIDTH, HEIGHT, 32, SDL_SWSURFACE);
 
   return 0;
+}
+
+size_t creata_buffer(int size) {
+  return (size_t)malloc(size * sizeof(uint8_t));
+}
+
+void destroy_buffer(size_t p) {
+  void *pbuf = (void*)p;
+  free(pbuf);
 }
 
 void doOpenCvTask(size_t addr, int width, int height, int cnt) {
@@ -40,4 +50,6 @@ void doOpenCvTask(size_t addr, int width, int height, int cnt) {
 
 EMSCRIPTEN_BINDINGS(my_module) {
   emscripten::function("doOpenCvTask", &doOpenCvTask);
+  emscripten::function("creatabuffer", &creata_buffer);
+  emscripten::function("destroybuffer", &destroy_buffer);
 }
